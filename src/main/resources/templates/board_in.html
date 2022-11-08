@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+
+<html xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<div th:replace="top::menu" style="padding-bottom: 50px;"></div>
+
+<style>
+  th{
+  text-align: center;
+  width: 100px;
+  vertical-align: middle;
+  font-size: 18px;
+  }
+  td{
+  text-align: center;
+  width: 300px;
+  }
+  p{
+    color:red;
+    }
+
+</style>
+<body>
+<br>
+<h2 align="center">글쓰기</h2>
+<div class="container mt-3">
+    <form method="post" action="in_save">
+        <table class="table table-hover">
+            <tr>
+                <th>글제목</th>
+                <td>
+                    <input type="text" name="btitle" class="form-control mt-3" placeholder="name of product">
+                </td>
+            </tr>
+            <tr>
+                <th>작성자</th>
+                <td>
+                    <input type="text" name="bwriter" class="form-control mt-3" placeholder="count of product">
+                </td>
+            </tr>
+            <tr>
+                <th>내용</th>
+                <td>
+                    <input type="text" name="bcontent" class="form-control mt-3" placeholder="price of product">
+                </td>
+            </tr>
+            <tr>
+                <th>첨부파일</th>
+                <td>
+                    <input type="file" name="bfile" class="form-control mt-3" placeholder="picture of product">
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <button type="submit" class="btn btn-light">입력</button>
+                    <button type="reset" class="btn btn-light">취소</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+</body>
+<div th:replace="footer::footer"></div>
+
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<div th:replace="top::menu" style="padding-bottom: 50px;"></div>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Spring Security Example</title>
+    <style type="text/css">
+table {
+	vertical-align: middle;
+	text-align: center;
+	border-left: none;
+	border-right: none;
+}
+
+h2 {
+	text-align: center;
+	padding: 20px 0;
+}
+
+table caption {
+	padding: .5em 0;
+}
+
+table.dataTable th, table.dataTable td {
+	white-space: nowrap;
+}
+
+.p {
+	text-align: center;
+	padding-top: 140px;
+	font-size: 14px;
+}
+
+table.table table-hover {
+	align-content: center;
+	border-collapse: separate;
+	border-spacing: 1px;
+	text-align: left;
+	line-height: 1.5;
+	margin: auto;
+	border-collapse: collapse;
+}
+
+table.table table-hover th {
+	width: 150px;
+	margin: auto;
+	font-weight: bold;
+	background: #efefef;
+
+}
+
+table.table table-hover td {
+	width: 350px;
+	margin: auto;
+}
+
+
+
+
+    </style>
+</head>
+<body>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-sm-6">
+
+
+            <h1>User만 글쓰기가 가능한 게시판</h1>
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="row">
+                            <!-- 컨텐츠등록 버튼 -->
+                            <aaa th:if="${#httpServletRequest.remoteUser != null }">
+                                <input type="hidden"
+                                       sec:authorize="hasRole(T(com.example.securityRenew.persistence.enums.UserRole).SYSTEM)"></input>
+                                <div class="col-sm-4" align="left">
+                                    <form action="/board_in">
+                                        <input type="submit"
+                                               sec:authorize="hasRole(T(com.example.securityRenew.persistence.enums.UserRole).USER)"
+                                               value="글쓰기">
+                                    </form>
+                                </div>
+                                <div class="col-sm-8" align="right">
+                                    <div class="row">
+
+                                    </div>
+                                </div>
+                            </aaa>
+                        </div>
+                        <div class="row" style="padding-top: 20px;">
+                            <table class="table table-bordered table-hover dt-responsive" border="1"
+                                   style="text-align: center; border-collapse: collapse; margin-left: auto; margin-right: auto;border-left: none; border-right: none;">
+                                <thead>
+                                <tr style="text-align: center;background-color: EEEEEE;">
+                                    <th scope="col" style="text-align: center;">No.</th>
+                                    <th scope="col" style="text-align: center;">글제목</th>
+                                    <th scope="col" style="text-align: center;">글쓴이</th>
+                                    <th scope="col" style="text-align: center;">작성일</th>
+                                    <th scope="col" style="text-align: center;">조회수</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>ss</td>
+                                    <td>aa</td>
+                                    <td>ww</td>
+                                    <td>cc</td>
+                                    <td>qq</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<div th:replace="footer::footer"></div>
+
+</html>
