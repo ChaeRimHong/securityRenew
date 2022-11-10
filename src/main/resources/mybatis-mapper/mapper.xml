@@ -1,0 +1,30 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.securityRenew.persistence.mapper.ServiceMapper">
+    <select id="search" resultType="com.example.securityRenew.persistence.dto.BoardDto">
+        select * from tb_board where btitle like '%' || #{param1} || '%' or bcontent like '%' || #{param1} || '%'
+    </select>
+    <!--
+    <insert id="in">
+        insert into market values (#{param1}, #{param2}, #{param3}, #{param4}, #{param5})
+    </insert>
+
+    <select id="out" resultType="com.ezen.market.DTO.Market">
+        select * from market
+    </select>
+
+    <select id="detail" resultType="com.ezen.market.DTO.Market">
+        select * from market where pname=#{param1}
+    </select>
+
+    <select id="mod_select" resultType="com.ezen.market.DTO.Market">
+        select * from market where pname=#{param1}
+    </select>
+
+    <delete id="del">
+        delete from market where pname=#{param1}
+    </delete>
+
+</mapper>

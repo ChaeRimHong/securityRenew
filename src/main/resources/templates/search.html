@@ -1,14 +1,106 @@
 <!DOCTYPE html>
 
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <div th:replace="top::menu" style="padding-bottom: 50px;"></div>
+<style type="text/css">
+table {
+	vertical-align: middle;
+	text-align: center;
+	border-left: none;
+	border-right: none;
+}
 
+h2 {
+	text-align: center;
+	padding: 20px 0;
+}
+
+table caption {
+	padding: .5em 0;
+}
+
+table.dataTable th, table.dataTable td {
+	white-space: nowrap;
+}
+
+.p {
+	text-align: center;
+	padding-top: 140px;
+	font-size: 14px;
+}
+
+table.table table-hover {
+	align-content: center;
+	border-collapse: separate;
+	border-spacing: 1px;
+	text-align: left;
+	line-height: 1.5;
+	margin: auto;
+	border-collapse: collapse;
+}
+
+table.table table-hover th {
+	width: 150px;
+	margin: auto;
+	font-weight: bold;
+	background: #efefef;
+
+}
+
+table.table table-hover td {
+	width: 350px;
+	margin: auto;
+}
+
+</style>
 <body>
+<br>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-sm-12">
+            <h2 align="center">검색 결과</h2>
 
-<div th:fragment="copy">
-  &copy; 2011 The Good Thymes Virtual Grocery
+            <div class="row" style="padding-top: 20px;">
+                <table class="table table-borderless"
+                       style="text-align: center; border-collapse: collapse; margin-left: auto; margin-right: auto;border-left: none; border-right: none;">
+                    <thead>
+                    <!--
+                    <tr style="text-align: center;background-color: EEEEEE;">
+                        <th scope="col" style="text-align: center; width:10px;">No.</th>
+                        <th scope="col" style="text-align: center; width:80px;">글제목</th>
+                        <th scope="col" style="text-align: center; width:40px;">글쓴이</th>
+                        <th scope="col" style="text-align: center; width:40px;">작성일</th>
+                        <th scope="col" style="text-align: center; width:30px;">분류</th>
+                        <th scope="col" style="text-align: center; width:30px;">조회수</th>
+                    </tr>
+                    -->
+                    </thead>
+                    <tbody>
+                    <div th:each="board,state : ${list}">
+                        <tr>
+                            <td style="text-align: left;" colspan="2">
+                                <a th:href="@{/board_detail_do(bno=${board.bno})}">
+                                    <ddd th:text="${board.btitle}"></ddd>
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left;" th:text="${board.bcontent}" colspan="2"></td>
+                        </tr>
+                        <tr style="text-align: left;">
+                            <td>
+                                <div th:text="${board.bwriteday}"></div> &emsp;
+                                <div th:text="${board.bcategory}"></div>
+                            </td>
+                        </tr>
+                        <tr></tr>
+                    </div>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 </div>
-
 </body>
 <div th:replace="footer::footer"></div>
 

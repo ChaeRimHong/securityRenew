@@ -9,6 +9,8 @@ import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.Set;
 
 @Getter
@@ -23,6 +25,10 @@ public class BoardDto {
 
     private String bwriter;
 
+    private LocalDate bwriteday;
+
+    private String bcategory;
+
     private String bcontent;
 
     private String bfile;
@@ -32,6 +38,6 @@ public class BoardDto {
     private Set<Long> roles;
 
     public Board toEntity() {
-        return Board.builder().bno(bno).btitle(btitle).bwriter(bwriter).bcontent(bcontent).bfile(bfile).readcnt(readcnt).build();
+        return Board.builder().bno(bno).btitle(btitle).bwriter(bwriter).bcategory(bcategory).bwriteday(bwriteday).bcontent(bcontent).bfile(bfile).readcnt(readcnt).build();
     }
 }

@@ -30,12 +30,23 @@ public class SecurityConfiguration {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         /* @formatter:off */
         http
+
                 .authorizeRequests()
-                .antMatchers("/", "/home", "/signUp","/board").permitAll() // 설정한 리소스의 접근을 인증절차 없이 허용
+                .antMatchers("/", "/home", "/signUp","/board","/board_detail","/board_detail_do","/search","/search_do").permitAll() // 설정한 리소스의 접근을 인증절차 없이 허용
                 .antMatchers("/system").hasRole(UserRole.SYSTEM.toString()) // SYSTEM 역할을 가지고 있어야 접근 허용
                 .antMatchers("/system/create").access("hasRole('" +  UserRole.SYSTEM.toString() +  "') and hasAuthority('" + UserAuthority.OP_CREATE_DATA.toString() + "')") // SYSTEM 역할과 OP_CREATE_DATA 권한을 가지고 있어야 접근 허용
                 .antMatchers("/system/delete").access("hasRole('" +  UserRole.SYSTEM.toString() +  "') and hasAuthority('" + UserAuthority.OP_DELETE_DATA.toString() + "')") // SYSTEM 역할과 OP_DELETE_DATA 권한을 가지고 있어야 접근 허용
                 .anyRequest().authenticated() // 그 외 모든 리소스를 의미하며 인증 필요
+                .and()
+                //'스프링 부트 Request method 'POST' not supported' 이거 해결할려고 내가 넣음
+                //https://chamch-dev.tistory.com/30
+                .csrf()
+                .ignoringAntMatchers("/board_in")
+                .ignoringAntMatchers("/board_in_save")
+                .ignoringAntMatchers("/board")
+                .ignoringAntMatchers("/search")
+                .ignoringAntMatchers("/search_do")
+                //
                 .and()
                 .formLogin()
                 .permitAll()

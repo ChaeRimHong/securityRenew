@@ -18,32 +18,40 @@
     <nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
         <div class="container-fluid mt-3" style="align: left; vertical-align:center;">
             <ul class="navbar-nav col p-3">
-                <a class="navbar-brand" href="#">
-                    <img src="" alt="Logo" style="width:40px; vertical-align:center;" class="rounded-pill">
-                </a>
-
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">게시판관리</a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="/welcome_board">회원가입 인사(ajax)</a></li>
-                        <li><a class="dropdown-item" href="/board">게시판</a></li>
-                        <li><a class="dropdown-item" href="#">A third link</a></li>
-                    </ul>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">회원관리</a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="/member_list">회원 명단</a></li>
-                        <li><a class="dropdown-item" href="#">Another link</a></li>
-                        <li><a class="dropdown-item" href="#">A third link</a></li>
-                    </ul>
-                </li>
+                <div style=" vertical-align:center;">
+                    <a class="navbar-brand" href="#">
+                        <img src="" alt="Logo" style="width:40px; vertical-align:center;" class="rounded-pill">
+                    </a>
+                </div>
+                <div style=" vertical-align:center;">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">게시판관리</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/welcome_board">회원가입 인사(ajax)</a></li>
+                            <li><a class="dropdown-item" href="/board">게시판</a></li>
+                            <li><a class="dropdown-item" href="#">A third link</a></li>
+                        </ul>
+                    </li>
+                </div>
+                <div th:if="${#httpServletRequest.remoteUser != null }">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button"
+                           data-bs-toggle="dropdown"
+                           sec:authorize="hasRole(T(com.example.securityRenew.persistence.enums.UserRole).SYSTEM)">회원관리</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/member_list">회원 명단</a></li>
+                            <li><a class="dropdown-item" href="#">Another link</a></li>
+                            <li><a class="dropdown-item" href="#">A third link</a></li>
+                        </ul>
+                    </li>
+                </div>
             </ul>
 
             <div class="col p-3" style="text-align: center; vertical-align:center;">
-                <form class="d-flex" style="align: center;">
-                    <input class="form-control me-2" type="text" placeholder="Search">
-                    <button class="btn btn-primary" type="button">Search</button>
+                <form class="d-flex" style="align: center;" action="/search_do" method="post">
+                    <input class="form-control me-2" name="keyword" type="text" placeholder="Search">
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                    <input class="btn btn-primary" type="submit" value="Search">
                 </form>
             </div>
 
@@ -70,6 +78,6 @@
 
         </div>
     </nav>
-
+</div>
 </body>
 </html></div>

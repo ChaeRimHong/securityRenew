@@ -2,15 +2,35 @@
 
 <html xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <div th:replace="top::menu" style="padding-bottom: 50px;"></div>
+<script>
 
+$(function(){
+
+$("#bcategoryDirect").hide();
+
+$("#bcategory").change(function() {
+		if($("#bcategory").val() == "direct") {
+		    $("#bcategory").val("");
+			$("#bcategoryDirect").show();
+		}  else {
+			$("#bcategoryDirect").hide();
+		}
+	})
+});
+
+$('textarea:first').click(function(){
+    $t = $(this).val().replace(/<br\s*\/?>/img,"x");
+    $(this).html($t)
+});
+</script>
 <style>
-  th{
+  .table-hover th{
   text-align: center;
   width: 100px;
   vertical-align: middle;
   font-size: 18px;
   }
-  td{
+  .table-hover td{
   text-align: center;
   width: 300px;
   }
@@ -23,34 +43,51 @@
 <br>
 <h2 align="center">글쓰기</h2>
 <div class="container mt-3">
-    <form method="post" action="in_save">
-        <table class="table table-hover">
+    <form method="post" action="/board_in_save">
+        <table class="table table-borderless">
             <tr>
-                <th>글제목</th>
+                <th style="vertical-align: middle;">글제목</th>
                 <td>
-                    <input type="text" name="btitle" class="form-control mt-3" placeholder="name of product">
+                    <input type="text" name="btitle" class="form-control mt-3">
                 </td>
             </tr>
             <tr>
-                <th>작성자</th>
+                <th style="vertical-align: middle;">작성자</th>
                 <td>
-                    <input type="text" name="bwriter" class="form-control mt-3" placeholder="count of product">
+                    <input type="text" name="bwriter" th:value="${#httpServletRequest.remoteUser}" class="form-control mt-3"  readonly>
                 </td>
             </tr>
             <tr>
-                <th>내용</th>
+                <th style="height: 300px; vertical-align: middle;" wrap="hard">내용</th>
                 <td>
-                    <input type="text" name="bcontent" class="form-control mt-3" placeholder="price of product">
+                    <textarea class="form-control" style="height:300px; width:100%;"  cols="30"  maxlength='1000' id="bcontent" name = "bcontent"></textarea>
+                </td>
+            </tr>
+
+            <tr>
+                <th>카테고리</th>
+                <td>
+                    <select class="form-select" style="font-size:15px;" id="bcategory" name="bcategory">
+                        <option>==아래 선택하기==</option>
+                        <option>게임</option>
+                        <option>음악</option>
+                        <option>공부</option>
+                        <option>요리</option>
+                        <option>반려동물</option>
+                        <option value="direct">직접입력</option>
+                    </select>
+                    <input class="form-control mt-3" type="text" id="bcategoryDirect" name="bcategory"/>
                 </td>
             </tr>
             <tr>
-                <th>첨부파일</th>
+                <th style="vertical-align: middle;">첨부파일</th>
                 <td>
-                    <input type="file" name="bfile" class="form-control mt-3" placeholder="picture of product">
+                    <input type="file" name="bfile" class="form-control mt-3">
                 </td>
             </tr>
             <tr>
                 <td colspan="2">
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                     <button type="submit" class="btn btn-light">입력</button>
                     <button type="reset" class="btn btn-light">취소</button>
                 </td>

@@ -8,6 +8,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.security.PrivateKey;
+import java.time.LocalDate;
+import java.util.Date;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
@@ -31,6 +33,12 @@ public class Board {
     @Column(name="bwriter")
     private String bwriter;
 
+    @Column(name="bcategory")
+    private String bcategory;
+
+    @Column(name="bwriteday")
+    private LocalDate bwriteday;
+
     @Column(name="bcontent")
     private String bcontent;
 
@@ -43,10 +51,12 @@ public class Board {
 
 
     @Builder
-    public Board(Long bno, String btitle, String bwriter, String bcontent,String bfile, int readcnt) {
+    public Board(Long bno, String btitle, String bwriter, String bcategory, LocalDate bwriteday, String bcontent,String bfile, int readcnt) {
         this.bno = bno;
         this.btitle = btitle;
         this.bwriter = bwriter;
+        this.bcategory = bcategory;
+        this.bwriteday = bwriteday;
         this.bcontent = bcontent;
         this.bfile = bfile;
         this.readcnt = readcnt;
@@ -59,6 +69,7 @@ CREATE TABLE tb_board (
 	bno number(9) NOT NULL,
 	btitle varchar(255) NULL,
 	bwriter varchar(255) NULL,
+	bwriteday date,
     bcontent varchar(900) NULL,
     bfile varchar(1800) NULL,
     readcnt number(9)

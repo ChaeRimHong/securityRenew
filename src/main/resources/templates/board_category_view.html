@@ -83,17 +83,22 @@ table.table table-hover td {
                         </div>
                         <div class="row">
                             <div class="col-sm-12" align="center">
-                                <categoryBtn th:each="board,state : ${list}">
+                                <categoryBtn th:each="board,state : ${bcategory}">
                                     <aaa th:if="${board.bcategory != null }">
+                                        <button class="btn btn-default" th:onclick="|location.href='@board_category_view(bcategoty=${board.bcategory})}'|">
+                                            <abc th:text="${board.bcategory}"></abc>
+                                        </button>
+                                        <!--
                                         <button class="btn btn-default" type="button" value="${board.bcategory}">
                                             <abc th:text="${board.bcategory}"></abc>
                                         </button>
+                                        -->
                                     </aaa>
                                 </categoryBtn>
                             </div>
                         </div>
                         <div class="row" style="padding-top: 20px;">
-                            <table class="table table-borderless"
+                            <table class="table table-bordered table-hover dt-responsive" border="1"
                                    style="text-align: center; border-collapse: collapse; margin-left: auto; margin-right: auto;border-left: none; border-right: none;">
                                 <thead>
                                 <tr style="text-align: center;background-color: EEEEEE;">
@@ -106,7 +111,7 @@ table.table table-hover td {
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr th:each="board,state : ${list}">
+                                <tr th:each="board,state : ${bcategory}">
                                     <td th:text="${board.bno}"></td>
                                     <td>
                                         <a th:href="@{/board_detail_do(bno=${board.bno})}">

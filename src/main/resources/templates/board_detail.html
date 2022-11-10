@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<div th:replace="top::menu" style="padding-bottom: 50px;"></div>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Spring Security Example</title>
+    <style type="text/css">
+table {
+	vertical-align: middle;
+	text-align: center;
+	border-left: none;
+	border-right: none;
+}
+
+h2 {
+	text-align: center;
+	padding: 20px 0;
+}
+
+table caption {
+	padding: .5em 0;
+}
+
+table.dataTable th, table.dataTable td {
+	white-space: nowrap;
+}
+
+.p {
+	text-align: center;
+	padding-top: 140px;
+	font-size: 14px;
+}
+
+table.table table-hover {
+	align-content: center;
+	border-collapse: separate;
+	border-spacing: 1px;
+	text-align: left;
+	line-height: 1.5;
+	margin: auto;
+	border-collapse: collapse;
+}
+
+table.table table-hover th {
+	width: 150px;
+	margin: auto;
+	font-weight: bold;
+	background: #efefef;
+
+}
+
+table.table table-hover td {
+	width: 350px;
+	margin: auto;
+}
+
+
+
+
+
+
+
+
+    </style>
+</head>
+<body>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-sm-6">
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="row">
+                            <!-- 컨텐츠등록 버튼 -->
+                            <div class="col-sm-4" align="left">
+
+                            </div>
+                            <div class="col-sm-8" align="right">
+                                <div class="row">
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="padding-top: 20px;">
+                            <table class="table table-borderless"
+                                   style="text-align: center; margin-left: auto; margin-right: auto;">
+                                <tr style="height:50px;background-color:#dddddd;" >
+                                    <td style="width: 100px; vertical-align: middle; font-size: 15px;" th:text="${bwriter}"></td>
+                                    <td style="width: 100px; vertical-align: middle; font-size: 15px;" th:text="${bwriteday}"></td>
+                                    <td style="width: 100px; vertical-align: middle; font-size: 15px;">
+                                        조회 : <bb th:text="${readcnt}"></bb>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <th style="border-bottom:none;font-size:24px;padding-top: 50px;" colspan="2" th:text="${btitle}"></th>
+                                    <td style="border-bottom:none;font-size:16px;padding-top: 50px;">
+                                        [ <sds th:text="${bcategory}"></sds> ]
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3" style="text-align:left;border-top:none; padding-top: 80px">
+                                        <img th:src="@{/image/}+${file}" width="80" height="60">
+                                        <!--
+                                        줄바꿈
+                                        https://offbyone.tistory.com/326
+                                        -->
+
+                                        <div style="white-space:pre;">
+                                             <p style="padding-bottom:50px;padding-left:20px;padding-top:50px;padding-right:20px;" th:text="${bcontent}"></p>
+                                        </div>
+
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td style="text-align:right;padding-right:10px;" colspan="3">
+                                        <a href="/board">목록</a> &emsp;
+                                        <a href="/board_in">글쓰기</a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<div th:replace="footer::footer"></div>
+
+</html>
