@@ -54,17 +54,6 @@ table.table table-hover td {
 	width: 350px;
 	margin: auto;
 }
-
-
-
-
-
-
-
-
-
-
-
     </style>
 
 </head>
@@ -135,10 +124,10 @@ table.table table-hover td {
                                             <!--
                                             <a th:href="@{/board_del(bno=${bno})}">삭제</a>
                                             -->
-                                            <div id="del">
-                                                <button class="btn btn-light" type="button" th:onclick="delete(bno=${bno})">삭제
-                                                </button>
-                                            </div>
+                                            <input type="hidden" id="bbno" name="bbno" th:value="${bno}" readonly>
+                                            <button type="button" class="btn btn-light" id="delBtn">삭제</button>
+                                            <button class="btn btn-light" type="button" th:onclick="delete(bno=${bno})">삭제
+                                            </button>
                                             <a th:href="@{/board_update(bno=${bno})}" type="button" class="btn btn-light">수정</a>
                                         </aaa>
 
@@ -155,21 +144,33 @@ table.table table-hover td {
 </body>
 <div th:replace="footer::footer"></div>
 
-<script th:inline="javascript">
-            function delete(){
-                const data =$("#del").val();
-                const delDTO = {
-                          result:data
-                          };
-                $.ajax({
-                    url: "/board_delete",
-                    data: sendDTO,
-                    type: 'POST',
-                }).done(function (data){
-                    $("#resultDiv").replaceWith(data);
-                });
+<script>
+$(function(){
+   $("#delBtn").click(function(){
+      var bbno = $("#bbno").val();
+      var bwriter = $("#bwriter").val();
+      alert(bbno+bwriter);
+
+      var sam ={"bbno":bbno};
+       var sam =JSON.stringify(sam);
+       $.ajax({
+            type:"post",
+            async:false,
+            url:"/board_delete",
+            data:{jsoninfo:sam},
+            contentType : "application/json; charset=utf-8",
+            success:function(data,textStatus){
+               if(data == 1){ // 실패
+                     alert("전송성공!!");
+                 } else { // 실패
+                     alert("등록 실패입니다. 다시 시도하세요");
+                 }
+            },
+            error:function(data,textStatus){
+               alert("전송실패!!");
             }
 
-
-</script>
+         });      //end ajax
+   });
+   </script>
 </html>

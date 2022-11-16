@@ -71,6 +71,7 @@ CREATE TABLE tb_board (
 	bwriter varchar(255) NULL,
 	bwriteday date,
     bcontent varchar(900) NULL,
+    bcategory varchar(200) NULL,
     bfile varchar(1800) NULL,
     readcnt number(9)
 );

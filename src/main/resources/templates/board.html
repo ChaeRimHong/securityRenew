@@ -85,14 +85,14 @@ table.table table-hover td {
                             <div class="col-sm-12" align="center">
                                 <categoryBtn th:each="board,state : ${list}">
                                     <aaa th:if="${board.bcategory != null }">
-                                        <button class="btn btn-default" type="button" value="${board.bcategory}">
-                                            <abc th:text="${board.bcategory}"></abc>
+                                        <button class="btn btn-default" type="button" th:href="@{/board_category_view(bcategory=${board.bcategory})}">
+                                            <aa th:text="${board.bcategory}"></aa>
                                         </button>
                                     </aaa>
                                 </categoryBtn>
                             </div>
                         </div>
-                        <div class="col-sm-12" align="right">
+                        <div class="col-sm-12" align="right" style="padding-top:20px;">
                             <form action="/board_in">
                                 <input type="submit" value="글쓰기">
                             </form>

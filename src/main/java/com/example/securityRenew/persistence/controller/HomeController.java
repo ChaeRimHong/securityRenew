@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -47,6 +48,7 @@ public class HomeController {
         return "board";
     }
 
+
     @GetMapping("/board_in")
     public String board_in() {
         return "board_in";
@@ -55,6 +57,7 @@ public class HomeController {
     @RequestMapping(value = "/board_in_save", method = {RequestMethod.GET, RequestMethod.POST})
     public String board_in_save(BoardDto boardDto) {
         boardDto.setBwriteday(LocalDate.now());
+        boardDto.setBcategory(boardDto.getBcategory().substring(0, boardDto.getBcategory().length() - 1));
         Board board = boardDto.toEntity();
         boardService.save(board);
         return "redirect:/board";
@@ -64,6 +67,7 @@ public class HomeController {
     public String board_detail(@RequestParam("bno") Long bno, Model model) {
         boardService.up_readcnt(bno);
         Board board2 = boardService.detail(bno);
+
         if (board2 != null) {
             model.addAttribute("bno", board2.getBno());
             model.addAttribute("btitle", board2.getBtitle());
