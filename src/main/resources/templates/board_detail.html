@@ -62,7 +62,11 @@ table.table table-hover td {
 
 
 
+
+
+
     </style>
+
 </head>
 <body>
 <div class="container mt-5">
@@ -86,18 +90,22 @@ table.table table-hover td {
                         <div class="row" style="padding-top: 20px;">
                             <table class="table table-borderless"
                                    style="text-align: center; margin-left: auto; margin-right: auto;">
-                                <tr style="height:50px;background-color:#dddddd;" >
-                                    <td style="width: 100px; vertical-align: middle; font-size: 15px;" th:text="${bwriter}"></td>
-                                    <td style="width: 100px; vertical-align: middle; font-size: 15px;" th:text="${bwriteday}"></td>
+                                <tr style="height:50px;background-color:#dddddd;">
+                                    <td style="width: 100px; vertical-align: middle; font-size: 15px;"
+                                        th:text="${bwriter}"></td>
+                                    <td style="width: 100px; vertical-align: middle; font-size: 15px;"
+                                        th:text="${bwriteday}"></td>
                                     <td style="width: 100px; vertical-align: middle; font-size: 15px;">
-                                        조회 : <bb th:text="${readcnt}"></bb>
+                                        조회 :
+                                        <bb th:text="${readcnt}"></bb>
                                     </td>
                                 </tr>
 
                                 <tr>
-                                    <th style="border-bottom:none;font-size:24px;padding-top: 50px;" colspan="2" th:text="${btitle}"></th>
+                                    <th style="border-bottom:none;font-size:24px;padding-top: 50px;" colspan="2"
+                                        th:text="${btitle}"></th>
                                     <td style="border-bottom:none;font-size:16px;padding-top: 50px;">
-                                        [ <sds th:text="${bcategory}"></sds> ]
+                                        <sds th:text="${bcategory}"></sds>
                                     </td>
                                 </tr>
                                 <tr>
@@ -109,16 +117,31 @@ table.table table-hover td {
                                         -->
 
                                         <div style="white-space:pre;">
-                                             <p style="padding-bottom:50px;padding-left:20px;padding-top:50px;padding-right:20px;" th:text="${bcontent}"></p>
+                                            <p style="padding-bottom:50px;padding-left:20px;padding-top:50px;padding-right:20px;"
+                                               th:text="${bcontent}"></p>
                                         </div>
 
                                     </td>
                                 </tr>
 
                                 <tr>
-                                    <td style="text-align:right;padding-right:10px;" colspan="3">
+                                    <td style="text-align:left;padding-right:10px;" colspan="2">
                                         <a href="/board">목록</a> &emsp;
                                         <a href="/board_in">글쓰기</a>
+                                        <!--  type="button" class="btn btn-light" -->
+                                    </td>
+                                    <td style="text-align:right;padding-right:10px;">
+                                        <aaa th:if="${#httpServletRequest.remoteUser} == ${bwriter} ">
+                                            <!--
+                                            <a th:href="@{/board_del(bno=${bno})}">삭제</a>
+                                            -->
+                                            <div id="del">
+                                                <button class="btn btn-light" type="button" th:onclick="delete(bno=${bno})">삭제
+                                                </button>
+                                            </div>
+                                            <a th:href="@{/board_update(bno=${bno})}" type="button" class="btn btn-light">수정</a>
+                                        </aaa>
+
                                     </td>
                                 </tr>
                             </table>
@@ -128,7 +151,25 @@ table.table table-hover td {
             </div>
         </div>
     </div>
+</div>
 </body>
 <div th:replace="footer::footer"></div>
 
+<script th:inline="javascript">
+            function delete(){
+                const data =$("#del").val();
+                const delDTO = {
+                          result:data
+                          };
+                $.ajax({
+                    url: "/board_delete",
+                    data: sendDTO,
+                    type: 'POST',
+                }).done(function (data){
+                    $("#resultDiv").replaceWith(data);
+                });
+            }
+
+
+</script>
 </html>

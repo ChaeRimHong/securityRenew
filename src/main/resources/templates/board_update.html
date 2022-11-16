@@ -43,31 +43,32 @@ $('textarea:first').click(function(){
 <br>
 <h2 align="center">글쓰기</h2>
 <div class="container mt-3">
-    <form method="post" action="/board_in_save">
+    <form method="post" action="/board_update_save">
         <table class="table table-borderless">
+            <input type="hidden" name="bno" th:value="${bno}">
             <tr>
                 <th style="vertical-align: middle;">글제목</th>
                 <td>
-                    <input type="text" name="btitle" class="form-control mt-3">
+                    <input type="text" name="btitle" class="form-control mt-3"  th:value="${btitle}">
                 </td>
             </tr>
             <tr>
                 <th style="vertical-align: middle;">작성자</th>
                 <td>
-                    <input type="text" name="bwriter" th:value="${#httpServletRequest.remoteUser}" class="form-control mt-3"  readonly>
+                    <input type="text" name="bwriter" th:value="${bwriter}" class="form-control mt-3"  readonly>
                 </td>
             </tr>
             <tr>
                 <th style="height: 300px; vertical-align: middle;" wrap="hard">내용</th>
                 <td>
-                    <textarea class="form-control" style="height:300px; width:100%;"  cols="30"  maxlength='1000' id="bcontent" name = "bcontent"></textarea>
+                    <textarea class="form-control" style="height:300px; width:100%;"  cols="30"  maxlength='1000' id="bcontent" name = "bcontent" th:text="${bcontent}"></textarea>
                 </td>
             </tr>
 
             <tr>
                 <th>카테고리</th>
                 <td>
-                    <select class="form-select" style="font-size:15px;" id="bcategory" name="bcategory">
+                    <select class="form-select" style="font-size:15px;" id="bcategory" name="bcategory" >
                         <option>==아래 선택하기==</option>
                         <option>게임</option>
                         <option>음악</option>
@@ -76,18 +77,18 @@ $('textarea:first').click(function(){
                         <option>반려동물</option>
                         <option value="direct">직접입력</option>
                     </select>
-                    <input class="form-control mt-3" type="text" id="bcategoryDirect" name="bcategory"/>
+                    <input class="form-control mt-3" type="text" id="bcategoryDirect" name="bcategory" th:value="${bcategory}"/>
                 </td>
             </tr>
             <tr>
                 <th style="vertical-align: middle;">첨부파일</th>
                 <td>
-                    <input type="file" name="bfile" class="form-control mt-3">
+                    <input type="file" name="bfile" class="form-control mt-3" th:value="${bfile}">
                 </td>
             </tr>
             <tr>
-                <td colspan="2" align="center">
-                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                <td colspan="2">
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                     <button type="submit" class="btn btn-light">입력</button>
                     <button type="reset" class="btn btn-light">취소</button>
                 </td>

@@ -26,5 +26,5 @@
     <delete id="del">
         delete from market where pname=#{param1}
     </delete>
-
+-->
 </mapper>

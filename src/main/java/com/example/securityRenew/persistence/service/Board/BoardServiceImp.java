@@ -39,4 +39,20 @@ public class BoardServiceImp implements BoardService {
     public Board detail(Long bno) {
         return boardRepository.findById(bno).orElse(null);
     }
+
+    @Override
+    public Board boardUpdate(Long bno) {
+        return boardRepository.findById(bno).orElse(null);
+    }
+
+    @Override
+    public void boardUpdateSave(Board board) {
+        boardRepository.findById(board.getBno()).orElse(null);
+        if (board != null) {
+            boardRepository.save(board);
+        }
+    }
+
+
+
 }

@@ -46,6 +46,8 @@ public class SecurityConfiguration {
                 .ignoringAntMatchers("/board")
                 .ignoringAntMatchers("/search")
                 .ignoringAntMatchers("/search_do")
+                .ignoringAntMatchers("/board_update")
+                .ignoringAntMatchers("/board_update_save")
                 //
                 .and()
                 .formLogin()

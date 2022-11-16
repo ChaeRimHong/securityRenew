@@ -5,6 +5,7 @@ import com.example.securityRenew.persistence.model.Board;
 
 import java.util.List;
 
+
 public interface ServiceMapper {
     List<Board> search(String keyword);
     /*
@@ -20,5 +21,9 @@ public interface ServiceMapper {
 
     public Market detail(String pname);
     */
+
+
+
+
 
 }

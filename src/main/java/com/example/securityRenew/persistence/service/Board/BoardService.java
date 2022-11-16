@@ -15,4 +15,8 @@ public interface BoardService {
     void up_readcnt(Long bno);
 
     Board detail(Long bno);
+
+    Board boardUpdate(Long bno);
+
+    void boardUpdateSave(Board board);
 }

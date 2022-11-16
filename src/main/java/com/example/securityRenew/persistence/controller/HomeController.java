@@ -77,12 +77,45 @@ public class HomeController {
         return "board_detail";
     }
 
+
     @PostMapping("/search_do")
     public String search(Model mo, @RequestParam("keyword") String keyword) {
         ServiceMapper sm = sqlSession.getMapper(ServiceMapper.class);
         List<Board> list = sm.search(keyword);
-        mo.addAttribute("list",list);
+        mo.addAttribute("list", list);
         return "search";
+    }
+
+    @GetMapping("/board_del")
+    public String board_del(@RequestParam("bno") Long bno) {
+        return "";
+    }
+
+    @GetMapping("/board_update")
+    public String board_update(@RequestParam("bno") Long bno, Model mo) {
+        System.out.println("bno number="+bno);
+        Board board = boardService.boardUpdate(bno);
+
+        mo.addAttribute("bno", board.getBno());
+        mo.addAttribute("btitle", board.getBtitle());
+        mo.addAttribute("bwriter", board.getBwriter());
+        mo.addAttribute("bwriteday", board.getBwriteday());
+        mo.addAttribute("bcategory", board.getBcategory());
+        mo.addAttribute("bcontent", board.getBcontent());
+        mo.addAttribute("bfile", board.getBfile());
+
+        System.out.println("btitle ="+board.getBtitle());
+        return "board_update";
+    }
+
+    @RequestMapping(value = "board_update_save", method = {RequestMethod.GET, RequestMethod.POST})
+    public String board_update_save(BoardDto boardDto) {
+        System.out.println("bno number="+boardDto.getBno());
+
+        boardDto.setBwriteday(LocalDate.now());
+        Board board = boardDto.toEntity();
+        boardService.boardUpdateSave(board);
+        return "redirect:/board";
     }
 
 }
