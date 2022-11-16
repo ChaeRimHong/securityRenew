@@ -7,10 +7,10 @@ SpringBoot Security를 이용한 로그인유저 게시판 구현
 - Error creating bean with name 'sqlSessionTemplate' defined in class path resource 이거를 못찾는중
 
 > 사용한 사이트들
->> https://www.thymeleaf.org/doc/tutorials/3.0/usingthymeleaf.html#template-layout
->> https://spring.io/guides/gs/securing-web/
->> https://start.spring.io/
->> https://mybatis.org/mybatis-3/configuration.html
+>> https://www.thymeleaf.org/doc/tutorials/3.0/usingthymeleaf.html#template-layout <br>
+>> https://spring.io/guides/gs/securing-web/ <br>
+>> https://start.spring.io/ <br>
+>> https://mybatis.org/mybatis-3/configuration.html <br>
 
 
 
