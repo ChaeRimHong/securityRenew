@@ -55,7 +55,39 @@ table.table table-hover td {
 	margin: auto;
 }
 
+
+
     </style>
+    <script>
+    function delete1(bno)
+    {
+    var ddata={"bno":bno};
+    alert(bno);
+    var result=confirm("게시글을 삭제할까요?");
+    if(result) {
+    $.ajax({
+                type:"get",
+                async:false,
+                url:"/board_del",
+                dataType:"json",
+                data:ddata,
+                success:function(send)
+                {
+                    if(send.length==0)
+                    {
+                        alert("없는 자료이다");
+                    }
+                    else
+                    {
+                    location.reload();
+                     }
+                }
+            });
+     }
+    }
+
+
+    </script>
 </head>
 <body>
 <div class="container mt-5">
@@ -99,7 +131,7 @@ table.table table-hover td {
                                 </tr>
                                 <tr>
                                     <td colspan="3" style="text-align:left;border-top:none; padding-top: 80px">
-                                        <img th:src="@{/image/}+${file}" width="80" height="60">
+                                        <img th:src="@{/image/}+${uploadfilename}" width="100" height="80 "/>
                                         <!--
                                         줄바꿈
                                         https://offbyone.tistory.com/326
@@ -119,25 +151,23 @@ table.table table-hover td {
                                         <a href="/board_in">글쓰기</a>
                                         <!--  type="button" class="btn btn-light" -->
                                     </td>
-            <!-- ====================여기부터 삭제 ajax==================== -->
+                                    <!-- ====================여기부터 삭제 ajax==================== -->
                                     <td style="text-align:right;padding-right:10px;">
                                         <aaa th:if="${#httpServletRequest.remoteUser} == ${bwriter} ">
+                                            <a th:bno="${bno}" th:value="${bno}" th:text="${'삭제'}"
+                                               th:onclick="delete1(this.getAttribute('bno'))"
+                                               type="button" class="btn btn-light"></a>
                                             <!--
                                             <a th:href="@{/board_del(bno=${bno})}">삭제</a>
-                                            -->
                                             <input type="hidden" id="bno" name="bno" th:value="${bno}" readonly>
                                             <button type="button" class="btn btn-light" id="delBtn">삭제</button>
-
                                             <input type="button" th:onclick="delete(bno=${bno});" value="삭제">
-                                            <!--
-                                            <button class="btn btn-light" type="button" th:onclick="delete(bno=${bno});">
-                                                삭제
-                                            </button>
--->
+                                            <button class="btn btn-light" type="button" th:onclick="delete(bno=${bno});">삭제</button>
+                                            -->
                                             <a th:href="@{/board_update(bno=${bno})}" type="button"
                                                class="btn btn-light">수정</a>
                                         </aaa>
-                <!-- ====================여기까지 삭제 ajax==================== -->
+                                        <!-- ====================여기까지 삭제 ajax==================== -->
                                     </td>
                                 </tr>
                             </table>
@@ -150,6 +180,8 @@ table.table table-hover td {
 </div>
 </body>
 <div th:replace="footer::footer"></div>
+
+<!--
 <script>
 function delete(bno) {
     var answer = confirm("삭제하시겠습니까?");
@@ -191,5 +223,5 @@ $(function(){
 		}
 	});
 </script>
-
+-->
 </html>

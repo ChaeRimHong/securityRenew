@@ -11,11 +11,16 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 @Controller
@@ -57,11 +62,27 @@ public class HomeController {
     }
 
     @RequestMapping(value = "/board_in_save", method = {RequestMethod.GET, RequestMethod.POST})
-    public String board_in_save(BoardDto boardDto) {
-        boardDto.setBwriteday(LocalDate.now());
-        boardDto.setBcategory(boardDto.getBcategory().substring(0, boardDto.getBcategory().length() - 1));
-        Board board = boardDto.toEntity();
-        boardService.save(board);
+    public String board_in_save(BoardDto boardDto, @RequestParam("file") MultipartFile mpf,Model mo) throws IOException {
+        if(!mpf.isEmpty()) {
+            String fullpath = "C:/springboot/securityRenew/src/main/resources/static/image/"+mpf.getOriginalFilename();
+            System.out.println("파일저장fullpath : "+fullpath);
+            boardDto.setStorefilename(fullpath);
+            boardDto.setBwriteday(LocalDate.now());
+            boardDto.setBcategory(boardDto.getBcategory().substring(0, boardDto.getBcategory().length() - 1));
+
+            System.out.println("mpf.getOriginalFilename() : "+mpf.getOriginalFilename());
+            mpf.transferTo(new java.io.File(fullpath));
+            boardDto.setUploadfilename(mpf.getOriginalFilename());
+            Board board=boardDto.toEntity();
+            boardService.save(board);
+        }
+        else {
+            boardDto.setBwriteday(LocalDate.now());
+            boardDto.setBcategory(boardDto.getBcategory().substring(0, boardDto.getBcategory().length() - 1));
+            Board board = boardDto.toEntity();
+            boardService.save(board);
+        }
+
         return "redirect:/board";
     }
 
@@ -69,7 +90,8 @@ public class HomeController {
     public String board_detail(@RequestParam("bno") Long bno, Model model) {
         boardService.up_readcnt(bno);
         Board board2 = boardService.detail(bno);
-
+        System.out.println("글번호 : "+board2.getBno());
+        System.out.println("그림 위치 : "+board2.getUploadfilename());
         if (board2 != null) {
             model.addAttribute("bno", board2.getBno());
             model.addAttribute("btitle", board2.getBtitle());
@@ -77,7 +99,8 @@ public class HomeController {
             model.addAttribute("bcategory", board2.getBcategory());
             model.addAttribute("bwriteday", board2.getBwriteday());
             model.addAttribute("bcontent", board2.getBcontent());
-            model.addAttribute("bfile", board2.getBfile());
+            model.addAttribute("storefilename", board2.getStorefilename());
+            model.addAttribute("uploadfilename", board2.getUploadfilename());
             model.addAttribute("readcnt", board2.getReadcnt());
         }
         return "board_detail";
@@ -92,12 +115,14 @@ public class HomeController {
         return "search";
     }
 
+    @GetMapping("/board_del")
     @ResponseBody
-    @RequestMapping(value="/board_del", method = {RequestMethod.GET, RequestMethod.POST})
-    public String board_del(@RequestParam("bno") Long bno) {
+    public void board_del(HttpServletRequest request) {
+        System.out.println("삭제됨?");
+        Long bno = Long.parseLong(request.getParameter("bno"));
         boardService.board_del(bno);
-        return "redirect:/board";
     }
+    
 
     @GetMapping("/board_update")
     public String board_update(@RequestParam("bno") Long bno, Model mo) {
@@ -110,7 +135,8 @@ public class HomeController {
         mo.addAttribute("bwriteday", board.getBwriteday());
         mo.addAttribute("bcategory", board.getBcategory());
         mo.addAttribute("bcontent", board.getBcontent());
-        mo.addAttribute("bfile", board.getBfile());
+        mo.addAttribute("storefilename", board.getStorefilename());
+        mo.addAttribute("uploadfilename", board.getUploadfilename());
 
         System.out.println("btitle ="+board.getBtitle());
         return "board_update";

@@ -31,13 +31,15 @@ public class BoardDto {
 
     private String bcontent;
 
-    private String bfile;
-
     private int readcnt;
+
+    private String storefilename;
+
+    private String uploadfilename;
 
     private Set<Long> roles;
 
     public Board toEntity() {
-        return Board.builder().bno(bno).btitle(btitle).bwriter(bwriter).bcategory(bcategory).bwriteday(bwriteday).bcontent(bcontent).bfile(bfile).readcnt(readcnt).build();
+        return Board.builder().bno(bno).btitle(btitle).bwriter(bwriter).bcategory(bcategory).bwriteday(bwriteday).bcontent(bcontent).readcnt(readcnt).storefilename(storefilename).uploadfilename(uploadfilename).build();
     }
 }

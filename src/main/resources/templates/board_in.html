@@ -43,7 +43,7 @@ $('textarea:first').click(function(){
 <br>
 <h2 align="center">글쓰기</h2>
 <div class="container mt-3">
-    <form method="post" action="/board_in_save">
+    <form method="post" action="/board_in_save" enctype="multipart/form-data">
         <table class="table table-borderless">
             <tr>
                 <th style="vertical-align: middle;">글제목</th>
@@ -71,7 +71,6 @@ $('textarea:first').click(function(){
                     <input type="text" class="form-control mt-3" name="bcategory" placeholder="태그 입력" />
                     -->
                     <select class="form-select" style="font-size:15px;" id="bcategory" name="bcategory">
-                        <option>==아래 선택하기==</option>
                         <option>수다</option>
                         <option>게임</option>
                         <option>음악</option>
@@ -86,7 +85,7 @@ $('textarea:first').click(function(){
             <tr>
                 <th style="vertical-align: middle;">첨부파일</th>
                 <td>
-                    <input type="file" name="bfile" class="form-control mt-3">
+                    <input type="file" name="file" id="file" class="form-control mt-3">
                 </td>
             </tr>
             <tr>
