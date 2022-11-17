@@ -70,6 +70,7 @@ $('textarea:first').click(function(){
                 <td>
                     <select class="form-select" style="font-size:15px;" id="bcategory" name="bcategory" >
                         <option>==아래 선택하기==</option>
+                        <option>수다</option>
                         <option>게임</option>
                         <option>음악</option>
                         <option>공부</option>
@@ -77,7 +78,7 @@ $('textarea:first').click(function(){
                         <option>반려동물</option>
                         <option value="direct">직접입력</option>
                     </select>
-                    <input class="form-control mt-3" type="text" id="bcategoryDirect" name="bcategory" th:value="${bcategory}"/>
+                    <input class="form-control mt-3" type="text" id="bcategoryDirect" name="bcategory" th:value="${bcategory}" placeholder="입력 후 스페이스바"/>
                 </td>
             </tr>
             <tr>

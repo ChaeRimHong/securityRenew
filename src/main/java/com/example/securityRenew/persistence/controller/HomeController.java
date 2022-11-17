@@ -5,12 +5,14 @@ import com.example.securityRenew.persistence.mapper.ServiceMapper;
 import com.example.securityRenew.persistence.model.Board;
 import com.example.securityRenew.persistence.service.Board.BoardService;
 import org.apache.ibatis.session.SqlSession;
+import org.apache.tomcat.util.json.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -90,9 +92,11 @@ public class HomeController {
         return "search";
     }
 
-    @GetMapping("/board_del")
+    @ResponseBody
+    @RequestMapping(value="/board_del", method = {RequestMethod.GET, RequestMethod.POST})
     public String board_del(@RequestParam("bno") Long bno) {
-        return "";
+        boardService.board_del(bno);
+        return "redirect:/board";
     }
 
     @GetMapping("/board_update")

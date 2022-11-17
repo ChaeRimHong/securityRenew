@@ -53,6 +53,10 @@ public class BoardServiceImp implements BoardService {
         }
     }
 
+    @Override
+    public void board_del(Long bno) {
+        boardRepository.deleteById(bno);
+    }
 
 
 }

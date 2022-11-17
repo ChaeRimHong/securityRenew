@@ -19,4 +19,6 @@ public interface BoardService {
     Board boardUpdate(Long bno);
 
     void boardUpdateSave(Board board);
+
+    void board_del(Long bno);
 }

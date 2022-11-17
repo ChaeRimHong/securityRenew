@@ -54,8 +54,8 @@ table.table table-hover td {
 	width: 350px;
 	margin: auto;
 }
-    </style>
 
+    </style>
 </head>
 <body>
 <div class="container mt-5">
@@ -81,7 +81,7 @@ table.table table-hover td {
                                    style="text-align: center; margin-left: auto; margin-right: auto;">
                                 <tr style="height:50px;background-color:#dddddd;">
                                     <td style="width: 100px; vertical-align: middle; font-size: 15px;"
-                                        th:text="${bwriter}"></td>
+                                        th:text="${bwriter}" id="bwriter"></td>
                                     <td style="width: 100px; vertical-align: middle; font-size: 15px;"
                                         th:text="${bwriteday}"></td>
                                     <td style="width: 100px; vertical-align: middle; font-size: 15px;">
@@ -119,18 +119,25 @@ table.table table-hover td {
                                         <a href="/board_in">글쓰기</a>
                                         <!--  type="button" class="btn btn-light" -->
                                     </td>
+            <!-- ====================여기부터 삭제 ajax==================== -->
                                     <td style="text-align:right;padding-right:10px;">
                                         <aaa th:if="${#httpServletRequest.remoteUser} == ${bwriter} ">
                                             <!--
                                             <a th:href="@{/board_del(bno=${bno})}">삭제</a>
                                             -->
-                                            <input type="hidden" id="bbno" name="bbno" th:value="${bno}" readonly>
+                                            <input type="hidden" id="bno" name="bno" th:value="${bno}" readonly>
                                             <button type="button" class="btn btn-light" id="delBtn">삭제</button>
-                                            <button class="btn btn-light" type="button" th:onclick="delete(bno=${bno})">삭제
-                                            </button>
-                                            <a th:href="@{/board_update(bno=${bno})}" type="button" class="btn btn-light">수정</a>
-                                        </aaa>
 
+                                            <input type="button" th:onclick="delete(bno=${bno});" value="삭제">
+                                            <!--
+                                            <button class="btn btn-light" type="button" th:onclick="delete(bno=${bno});">
+                                                삭제
+                                            </button>
+-->
+                                            <a th:href="@{/board_update(bno=${bno})}" type="button"
+                                               class="btn btn-light">수정</a>
+                                        </aaa>
+                <!-- ====================여기까지 삭제 ajax==================== -->
                                     </td>
                                 </tr>
                             </table>
@@ -143,34 +150,46 @@ table.table table-hover td {
 </div>
 </body>
 <div th:replace="footer::footer"></div>
-
 <script>
+function delete(bno) {
+    var answer = confirm("삭제하시겠습니까?");
+    if(answer) {
+    var query = {"bno": bno};
+    $ajax({
+        url: "/board_delete",
+        type: "get",
+        data:query,
+        success:function(data) {
+            location.reload();
+        }
+     })
+    }
+}
+
 $(function(){
-   $("#delBtn").click(function(){
-      var bbno = $("#bbno").val();
-      var bwriter = $("#bwriter").val();
-      alert(bbno+bwriter);
+	$("#delBtn").click(function(){
+		var bno = $("#bno").val();
+		alert(bno);
+		var bwriter = $("#bwriter").val();
+		var nowUser = $("#nowUser").val();
+		if(bwriter==nowUser) {
+		    var sam ={"bno":bno};
+	        var sam =JSON.stringify(sam);
+	        $.ajax({
+	         type:"post",
+	         async:false,
+	         url:"/board_del",
+	         data:{jsoninfo:sam},
 
-      var sam ={"bbno":bbno};
-       var sam =JSON.stringify(sam);
-       $.ajax({
-            type:"post",
-            async:false,
-            url:"/board_delete",
-            data:{jsoninfo:sam},
-            contentType : "application/json; charset=utf-8",
-            success:function(data,textStatus){
-               if(data == 1){ // 실패
-                     alert("전송성공!!");
-                 } else { // 실패
-                     alert("등록 실패입니다. 다시 시도하세요");
-                 }
-            },
-            error:function(data,textStatus){
-               alert("전송실패!!");
-            }
+	         success:function(data,textStatus){
+	        	     alert("삭제되었습니다.");
+                   }
+	      });      //end ajax
+		}
+		else {
+		    alert("잘못된 접근입니다!");
+		}
+	});
+</script>
 
-         });      //end ajax
-   });
-   </script>
 </html>
