@@ -1,6 +1,9 @@
 # securityRenew
 SpringBoot Security를 이용한 로그인유저 게시판 구현
 
+>사이트 간단 설명 
+[security게시판.pdf](https://github.com/ChaeRimHong/securityRenew/files/10029587/security.pdf)
+
 
 
 > 사용한 사이트들
