@@ -1,7 +1,6 @@
 package com.example.securityRenew.persistence.service.Hello;
 
 import com.example.securityRenew.persistence.dao.HelloRepository;
-import com.example.securityRenew.persistence.model.Board;
 import com.example.securityRenew.persistence.model.Hello;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -17,8 +16,8 @@ public class HelloServiceImp implements HelloService {
     HelloRepository helloRepository;
 
     @Override
-    public void save(Hello hello) {
-        helloRepository.save(hello);
+    public Hello save(Hello hello) {
+        return  helloRepository.save(hello);
     }
 
     @Override
@@ -28,6 +27,6 @@ public class HelloServiceImp implements HelloService {
 
     @Override
     public List<Hello> out() {
-        return HelloRepository.findAll(Sort.by(Sort.Direction.DESC, "hno"));
+        return helloRepository.findAll(Sort.by(Sort.Direction.DESC,"hno"));
     }
 }

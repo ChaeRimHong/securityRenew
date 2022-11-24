@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface HelloService {
 
-    public void save(Hello hello);
+    public Hello save(Hello hello);
 
     Page<Hello> listpage(int page);
 

@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <div th:replace="top::menu" style="padding-bottom: 50px;"></div>
-
 <head>
     <title>Welcome!</title>
 </head>
@@ -22,6 +21,9 @@
 
 
 
+
+
+
 </style>
 <body>
 <div class="container mt-5">
@@ -35,31 +37,37 @@
 
                 <div class=" input-group mb-3">
                     <form method="post" action="/hello_board_in" style="display: inline">
-                        <span><input type="text" class="form-control" placeholder="인사말을 입력하세요!" name="hello_greeting"></span>
-                        <input type="hidden" name="hello_writer" th:value="${#httpServletRequest.remoteUser}" class="form-control mt-3">
-                        <input type="button" class="btn btn-outline-secondary" value="등록">
+                        <input type="text" class="form-control" placeholder="가입 인사" name="hello_greeting"
+                               id="hello_greeting">
+                        <input type="hidden" id="hello_writer" name="hello_writer"
+                               th:value="${#httpServletRequest.remoteUser}"
+                               class="form-control mt-3">
+                        <button type="button" class="btn btn-outline-secondary" name="write" id="write">등록</button>
                     </form>
                 </div>
                 <br>
                 <div class="col-xs-12">
                     <div class="row">
+                        <!--
                         <table class="table table-borderless"
                                style="text-align: center; border-collapse: collapse; margin-left: auto; margin-right: auto;border-left: none; border-right: none;">
-                            <tr>
-                                <th>aaa</th>
-                                <td>하이요</td>
-                                <td>2022-11-22 14:52:09</td>
-                            </tr>
-                        </table>
+                                                       </table>
+                               -->
+                            <div class=" input-group mb-3">
+                            <button type="button" class="btn btn-outline-secondary" name="write"
+                                    id="hello_board_out">보기
+                            </button>
+                        </div>
                     </div>
 
                 </div>
+
             </div>
         </div>
     </div>
 </div>
 
-
+<!--
 <div class="container mt-3">
     <div class="pagination">
         <ul class="pagination justify-content-center">
@@ -69,7 +77,87 @@
         </ul>
     </div>
 </div>
+-->
 </body>
+
+
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
+<script>
+            $(document).ready(function(){
+                $("#write").click(function(){
+                    var json = {
+                        hello_writer : $("#hello_writer").val(),
+                        hello_greeting : $("#hello_greeting").val()
+                    };
+
+                    for(var str in json){
+                        //JSON에 STR의 길이가 0일 경우
+                        if(json[str].length == 0){
+                            //해당하는 ID에 placeholder를 찾아 경고창을 띄움
+                            alert($("#" + str).attr("placeholder") + "를 입력해주세요.");
+                            //해당하는 ID에 포커스를 올림
+                            $("#" + str).focus();
+                            //리턴
+                            return;
+                        }
+                    }
+
+                     $.ajax({
+                        type : "post",
+                        url : "/hello_board_in",
+                        data : json,
+                        success : function(data) {
+                            alert('등록되었습니다. ');
+                            console.log("인사말 등록 성공");
+                            location.reload();
+                        },
+                        error : function(error) {
+                            alert("오류 발생"+ error);
+                        }
+                    });
+                });
+            });
+
+</script>
+<script>
+$(function(){
+$("#hello_board_out").click(function(){   //데이타베이스 자료를 JSP입력화면에 출력.AJAX]
+        $.ajax({
+          type:"get",
+          dataType:"json",
+          url:"hello_board_out",
+          success:function(data)
+          {
+             alert("자료불러오기 성공!!")
+             var htm = "<table class='table table-borderless'
+                               style='text-align: center; border-collapse: collapse; margin-left: auto; margin-right: auto;border-left: none; border-right: none;' border = '1' align='center'>";
+
+             for(var i in data){
+                htm += "<tr align = 'center'>";
+                htm += "<td style='border-right:none; border-left:none;'>" + data[i].hno + "</td>";
+                htm += "<td style='border-right:none; border-left:none;'>" + data[i].hello_writer + "</td>";
+                htm += "<td style='border-right:none; border-left:none;'>" + data[i].hello_greeting+ "</td>";
+                htm += "<td style='border-right:none; border-left:none;'>" + data[i].hello_like+ "</td>";
+                htm += "<td style='border-right:none; border-left:none;'>" + data[i].hello_writeday+ "</td>";
+
+                htm += "<td style='border-right:none; border-left:none;'>"
+                //htm += "<a href='reply_mod?repwriter="+data[i].repwriter+"'>수정</a>&emsp; ";
+               	//htm += "<a href='reply_del?repwriter="+data[i].repwriter+"'>삭제</a></td>";
+                //htm += "<button style='font-size:14px;' class='btn btn-default' onclick='location.href='reply_mod?repwriter="+data[i].repwriter+"'>수정</button> &emsp;";
+                //htm += "<button style='font-size:14px;' class='btn btn-default' onclick='location.href='reply_del?repwriter='+data[i].repwriter+''>삭제</button>";
+
+                htm += "</tr>";
+             }
+             htm += "</table>";
+             $("#hello_board_out").html(htm);
+          }
+       });      //end ajax
+    }); //show..자료출력
+
+});
+
+
+</script>
 <div th:replace="footer::footer"></div>
 
 </html>

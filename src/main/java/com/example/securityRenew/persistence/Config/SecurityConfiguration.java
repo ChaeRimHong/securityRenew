@@ -32,7 +32,7 @@ public class SecurityConfiguration {
         http
 
                 .authorizeRequests()
-                .antMatchers("/", "/home", "/signUp","/board","/board_detail","/board_detail_do","/search","/search_do","/hello_board").permitAll() // 설정한 리소스의 접근을 인증절차 없이 허용
+                .antMatchers("/", "/home", "/signUp","/board","/board_detail","/board_detail_do","/search","/search_do","/hello_board","hello_board_out").permitAll() // 설정한 리소스의 접근을 인증절차 없이 허용
                 .antMatchers("/system").hasRole(UserRole.SYSTEM.toString()) // SYSTEM 역할을 가지고 있어야 접근 허용
                 .antMatchers("/system/create").access("hasRole('" +  UserRole.SYSTEM.toString() +  "') and hasAuthority('" + UserAuthority.OP_CREATE_DATA.toString() + "')") // SYSTEM 역할과 OP_CREATE_DATA 권한을 가지고 있어야 접근 허용
                 .antMatchers("/system/delete").access("hasRole('" +  UserRole.SYSTEM.toString() +  "') and hasAuthority('" + UserAuthority.OP_DELETE_DATA.toString() + "')") // SYSTEM 역할과 OP_DELETE_DATA 권한을 가지고 있어야 접근 허용
@@ -48,6 +48,7 @@ public class SecurityConfiguration {
                 .ignoringAntMatchers("/search_do")
                 .ignoringAntMatchers("/board_update")
                 .ignoringAntMatchers("/board_update_save")
+                .ignoringAntMatchers("/hello_board_in")
                 //
                 .and()
                 .formLogin()
