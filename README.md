@@ -13,7 +13,8 @@ SpringBoot Security를 이용한 로그인유저 게시판 구현
 >> https://mybatis.org/mybatis-3/configuration.html <br>
 
 
-
+>image폴더
+>resources/static폴더 만들고 그아래 image폴더임
 
 ![스크린샷(124)](https://user-images.githubusercontent.com/113007878/203227857-294d941e-5c3b-4ce2-a193-bd2917a9ab2e.png)
 ![스크린샷(96)](https://user-images.githubusercontent.com/113007878/202102503-c978997d-4f45-4096-8ec5-ba0814313ba9.png)
