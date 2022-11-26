@@ -37,7 +37,7 @@ public class Board {
     private String bcategory;
 
     @Column(name="bwriteday")
-    private LocalDate bwriteday;
+    private String bwriteday;
 
     @Column(name="bcontent")
     private String bcontent;
@@ -52,7 +52,7 @@ public class Board {
     private String uploadfilename;
 
     @Builder
-    public Board(Long bno, String btitle, String bwriter, String bcategory, LocalDate bwriteday, String bcontent, int readcnt,String storefilename, String uploadfilename) {
+    public Board(Long bno, String btitle, String bwriter, String bcategory, String bwriteday, String bcontent, int readcnt,String storefilename, String uploadfilename) {
         this.bno = bno;
         this.btitle = btitle;
         this.bwriter = bwriter;
@@ -75,7 +75,7 @@ CREATE TABLE tb_board (
 	bwriter varchar(255) NULL,
     bcontent varchar(900) NULL,
     readcnt number(9),
-    bwriteday date,
+    bwriteday varchar(60),
     bcategory varchar(600) NULL,
     storefilename varchar(1800) NULL,
     uploadfilename varchar(1800) NULL

@@ -22,7 +22,7 @@ public class HelloDto{
     @JoinColumn(name = "userId")
     private String hello_writer;
 
-    private LocalDate hello_writeday;
+    private String hello_writeday;
 
     private String hello_greeting;
 

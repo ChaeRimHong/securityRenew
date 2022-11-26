@@ -25,7 +25,7 @@ public class BoardDto {
 
     private String bwriter;
 
-    private LocalDate bwriteday;
+    private String bwriteday;
 
     private String bcategory;
 

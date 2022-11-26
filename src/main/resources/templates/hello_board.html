@@ -3,6 +3,8 @@
 <div th:replace="top::menu" style="padding-bottom: 50px;"></div>
 <head>
     <title>Welcome!</title>
+    <meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>
+    <meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
 </head>
 <style>
   .table-hover th{
@@ -17,12 +19,7 @@
   }
   p{
     color:red;
-    }
-
-
-
-
-
+  }
 
 </style>
 <body>
@@ -46,20 +43,31 @@
                     </form>
                 </div>
                 <br>
-                <div class="col-xs-12">
-                    <div class="row">
-                        <!--
+                <div class="row">
+                    <div class="col-xs-12">
+                        <button class="btn btn-default" id="helloCall">가입인사 보기</button>
+                        <br><br>
                         <table class="table table-borderless"
-                               style="text-align: center; border-collapse: collapse; margin-left: auto; margin-right: auto;border-left: none; border-right: none;">
-                                                       </table>
-                               -->
-                            <div class=" input-group mb-3">
-                            <button type="button" class="btn btn-outline-secondary" name="write"
-                                    id="hello_board_out">보기
-                            </button>
-                        </div>
+                               style="text-align: center; border-collapse: collapse; margin-left: auto; margin-right:
+                                       auto;border-left: none; border-right: none;vertical-align: middle;"
+                               id="helloTable" th:fragment="helloTable">
+                            <tr th:each="hello,state : ${hello2}">
+                                <th:block th:if="${hello2 != null}">
+                                    <th th:text="${hello.hno}" style="text-align: center"></th>
+                                    <td th:text="${hello.hello_writer}" style="text-align: center"></td>
+                                    <td th:text="${hello.hello_greeting}" style="text-align: center"></td>
+                                    <td th:text="${hello.hello_like}" style="text-align: center"></td>
+                                    <td th:text="${hello.hello_writeday}" style="text-align: center"></td>
+                                    <td th:if="${#httpServletRequest.remoteUser == hello.hello_writer }" >
+                                        <button class="btn btn-default" type="button" id="hello_del">삭제</button>
+                                    </td>
+                                    <td th:else="${#httpServletRequest.remoteUser != hello.hello_writer }">
+                                        <input class="btn btn-default" type="hidden"></input>
+                                    </td>
+                                </th:block>
+                            </tr>
+                        </table>
                     </div>
-
                 </div>
 
             </div>
@@ -118,46 +126,32 @@
                 });
             });
 
-</script>
-<script>
-$(function(){
-$("#hello_board_out").click(function(){   //데이타베이스 자료를 JSP입력화면에 출력.AJAX]
-        $.ajax({
-          type:"get",
-          dataType:"json",
-          url:"hello_board_out",
-          success:function(data)
-          {
-             alert("자료불러오기 성공!!")
-             var htm = "<table class='table table-borderless'
-                               style='text-align: center; border-collapse: collapse; margin-left: auto; margin-right: auto;border-left: none; border-right: none;' border = '1' align='center'>";
-
-             for(var i in data){
-                htm += "<tr align = 'center'>";
-                htm += "<td style='border-right:none; border-left:none;'>" + data[i].hno + "</td>";
-                htm += "<td style='border-right:none; border-left:none;'>" + data[i].hello_writer + "</td>";
-                htm += "<td style='border-right:none; border-left:none;'>" + data[i].hello_greeting+ "</td>";
-                htm += "<td style='border-right:none; border-left:none;'>" + data[i].hello_like+ "</td>";
-                htm += "<td style='border-right:none; border-left:none;'>" + data[i].hello_writeday+ "</td>";
-
-                htm += "<td style='border-right:none; border-left:none;'>"
-                //htm += "<a href='reply_mod?repwriter="+data[i].repwriter+"'>수정</a>&emsp; ";
-               	//htm += "<a href='reply_del?repwriter="+data[i].repwriter+"'>삭제</a></td>";
-                //htm += "<button style='font-size:14px;' class='btn btn-default' onclick='location.href='reply_mod?repwriter="+data[i].repwriter+"'>수정</button> &emsp;";
-                //htm += "<button style='font-size:14px;' class='btn btn-default' onclick='location.href='reply_del?repwriter='+data[i].repwriter+''>삭제</button>";
-
-                htm += "</tr>";
-             }
-             htm += "</table>";
-             $("#hello_board_out").html(htm);
-          }
-       });      //end ajax
-    }); //show..자료출력
-
-});
-
 
 </script>
+
+<script type="text/javascript">
+window.onload = function() {
+	var httpRequest;
+	// 호출 버튼을 클릭하였을 때, 데이터를 요청하고 받아오는 Ajax 구현 부분
+	document.getElementById("helloCall").addEventListener('click', () => {
+		httpRequest = new XMLHttpRequest();
+	    httpRequest.onreadystatechange = () => {
+		    if (httpRequest.readyState === XMLHttpRequest.DONE) {
+			      if (httpRequest.status === 200) {
+			    	  document.getElementById("helloTable").innerHTML = httpRequest.response;
+			      } else {
+			        alert('Request Error!');
+			      }
+		    }
+	    };
+	    httpRequest.open('GET', '/hello_board_out');
+	    httpRequest.send();
+	});
+}
+
+</script>
+
+
 <div th:replace="footer::footer"></div>
 
 </html>

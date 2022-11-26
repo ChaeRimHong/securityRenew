@@ -2,16 +2,12 @@ package com.example.securityRenew.persistence.controller;
 
 import com.example.securityRenew.persistence.dto.BoardDto;
 import com.example.securityRenew.persistence.dto.HelloDto;
-import com.example.securityRenew.persistence.dto.UserDto;
 import com.example.securityRenew.persistence.mapper.ServiceMapper;
 import com.example.securityRenew.persistence.model.Board;
 import com.example.securityRenew.persistence.model.Hello;
-import com.example.securityRenew.persistence.model.User;
 import com.example.securityRenew.persistence.service.Board.BoardService;
 import com.example.securityRenew.persistence.service.Hello.HelloService;
 import org.apache.ibatis.session.SqlSession;
-import org.apache.tomcat.util.json.JSONParser;
-import org.hibernate.service.spi.InjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -23,10 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 @Controller
@@ -74,7 +67,11 @@ public class HomeController {
             String fullpath = "C:/springboot/securityRenew/src/main/resources/static/image/"+mpf.getOriginalFilename();
             System.out.println("파일저장fullpath : "+fullpath);
             boardDto.setStorefilename(fullpath);
-            boardDto.setBwriteday(LocalDate.now());
+            LocalDate write_date=LocalDate.now();
+            LocalTime write_time=LocalTime.now();
+            String date_all=(write_date.toString()+" "+write_time.toString()).substring(0,16);
+
+            boardDto.setBwriteday(date_all);
             boardDto.setBcategory(boardDto.getBcategory().substring(0, boardDto.getBcategory().length() - 1));
 
             System.out.println("mpf.getOriginalFilename() : "+mpf.getOriginalFilename());
@@ -84,7 +81,11 @@ public class HomeController {
             boardService.save(board);
         }
         else {
-            boardDto.setBwriteday(LocalDate.now());
+            LocalDate write_date=LocalDate.now();
+            LocalTime write_time=LocalTime.now();
+            String date_all=write_date.toString()+" "+write_time.toString();
+
+            boardDto.setBwriteday(date_all);
             boardDto.setBcategory(boardDto.getBcategory().substring(0, boardDto.getBcategory().length() - 1));
             Board board = boardDto.toEntity();
             boardService.save(board);
@@ -153,7 +154,11 @@ public class HomeController {
     public String board_update_save(BoardDto boardDto) {
         System.out.println("bno number="+boardDto.getBno());
 
-        boardDto.setBwriteday(LocalDate.now());
+        LocalDate write_date=LocalDate.now();
+        LocalTime write_time=LocalTime.now();
+        String date_all=(write_date.toString()+" "+write_time.toString()).substring(0,16);
+
+        boardDto.setBwriteday(date_all);
         Board board = boardDto.toEntity();
         boardService.boardUpdateSave(board);
         return "redirect:/board";
@@ -167,20 +172,21 @@ public class HomeController {
     @ResponseBody
     @RequestMapping(value = "/hello_board_in", method = {RequestMethod.GET, RequestMethod.POST})
     public String hello_board_in(HelloDto helloDto,HttpSession session) {
-        helloDto.setHello_writeday(LocalDate.now());
+        LocalDate write_date=LocalDate.now();
+        LocalTime write_time=LocalTime.now();
+        String date_all=(write_date.toString()+" "+write_time.toString()).substring(0,16);
+
+        helloDto.setHello_writeday(date_all);
         Hello hello = helloDto.toEntity();
         helloService.save(hello);
         return "redirect:/hello_board";
-       // return "";
     }
 
-    @ResponseBody
-    @RequestMapping(value = "/hello_board_out", method = {RequestMethod.GET, RequestMethod.POST})
-    public String hello_board_out(Model mo) {
+    @GetMapping("/hello_board_out")
+    public String getMembers(Model model) throws Exception { // /get/member로 호출 시 가상의 memberList를 작성하여 html에 전달
         List<Hello> hello2 = helloService.out();
-        mo.addAttribute("hello2",hello2);
-
-        return "redirect:/hello_board";
+        model.addAttribute("hello2",hello2);
+        return "hello_board :: helloTable"; // template 파일 이름 + '::' + 데이터가 변경 될 fragment id
     }
 
 }

@@ -31,13 +31,13 @@ public class Hello {
     private String hello_greeting;
 
     @Column(name="hello_writeday")
-    private LocalDate hello_writeday;
+    private String hello_writeday;
 
     @Column(name="hello_like")
     private int hello_like;
 
     @Builder
-    public Hello(Long hno, String hello_writer, String hello_greeting, LocalDate hello_writeday, int hello_like) {
+    public Hello(Long hno, String hello_writer, String hello_greeting, String hello_writeday, int hello_like) {
         this.hno = hno;
         this.hello_writer = hello_writer;
         this.hello_greeting = hello_greeting;
@@ -54,7 +54,7 @@ CREATE TABLE tb_hello (
 	hello_writer varchar(255) NULL,
 	hello_greeting varchar(255) NULL,
     hello_like number(9),
-    hello_writeday date
+    hello_writeday varchar(60)
 );
 
 
