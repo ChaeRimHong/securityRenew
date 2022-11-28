@@ -5,12 +5,12 @@ SpringBoot Security를 이용한 로그인유저 게시판 구현
 [security게시판.pdf](https://github.com/ChaeRimHong/securityRenew/files/10029587/security.pdf)
 
 >해야할 것
-1. 게시글 삭제 후 board로 돌아가기
-2. 가입인사 삭제 만들기
-3. 게시글 추천 만들기
-4. 관리자 접속 시, 회원 명단 뜨게 하기
-5. 카테고리 누르면 카테고리 별 글 정렬
-6. mypage 정보수정 만들기 (+회원탈퇴)
+>1. 게시글 삭제 후 board로 돌아가기 (11-28~)
+>2. 가입인사 삭제 만들기 (11-28~)
+>3. 게시글 추천 만들기 (11-28~)
+>4. 관리자 접속 시, 회원 명단 뜨게 하기
+>5. 카테고리 누르면 카테고리 별 글 정렬
+>6. mypage 정보수정 만들기 (+회원탈퇴)
 
 > 사용한 사이트들
 >> https://www.thymeleaf.org/doc/tutorials/3.0/usingthymeleaf.html#template-layout <br>
