@@ -4,7 +4,8 @@ SpringBoot Security를 이용한 로그인유저 게시판 구현
 ><h3>사이트 간단 설명</h3>
 >[security게시판.pdf](https://github.com/ChaeRimHong/securityRenew/files/10029587/security.pdf)
 
-><h4>해야할 것</h4>
+<br><br>
+><h3>해야할 것</h3>
 >1. 게시글 삭제 후 board로 돌아가기 (11-28~)
 >2. 가입인사 삭제 만들기 (11-28~)
 >3. 게시글 추천 만들기 (11-28~)
@@ -12,11 +13,15 @@ SpringBoot Security를 이용한 로그인유저 게시판 구현
 >5. 카테고리 누르면 카테고리 별 글 정렬
 >6. mypage 정보수정 만들기 (+회원탈퇴)
 
+<br><br>
+
 > 사용한 사이트들
 >> https://www.thymeleaf.org/doc/tutorials/3.0/usingthymeleaf.html#template-layout <br>
 >> https://spring.io/guides/gs/securing-web/ <br>
 >> https://start.spring.io/ <br>
 >> https://mybatis.org/mybatis-3/configuration.html <br>
+
+<br><br>
 
 
 >image폴더 : 
