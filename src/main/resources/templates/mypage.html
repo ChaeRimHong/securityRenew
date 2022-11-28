@@ -1,12 +1,72 @@
 <!DOCTYPE html>
-
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <div th:replace="top::menu" style="padding-bottom: 50px;"></div>
 
-<body>
+<head>
+    <title>Spring Security Example</title>
+    <style>
+  .table-hover th{
+  text-align: center;
+  width: 100px;
+  vertical-align: middle;
+  font-size: 18px;
+  }
+  .table-hover td{
+  text-align: center;
+  width: 300px;
+  }
+  p{
+    color:red;
+    }
 
-<div th:fragment="copy">
-  &copy; 2011 The Good Thymes Virtual Grocery
+</style>
+</head>
+<body>
+<div class="container mt-5">
+    <div class="row" style="padding-top: 20px;">
+        <form method="post" action="/mypage_save" enctype="multipart/form-data">
+            <table class="table table-borderless">
+                <tr>
+                    <th colspan="2" height="100px">
+                        <input type="file" name="myimg" class="form-control mt-3">
+                    </th>
+                </tr>
+
+                <tr>
+                    <th style="vertical-align: middle;">아이디</th>
+                    <td>
+                        <input type="text" name="myid" th:value="${id}" class="form-control mt-3" readonly>
+                    </td>
+                </tr>
+                <tr>
+                    <th>비밀번호</th>
+                    <td>
+                        <input type="">
+                    </td>
+                </tr>
+                <tr>
+                    <th>이름</th>
+                    <td>
+                        <input type="text" name="myname" value="${name}">
+                    </td>
+                </tr>
+
+                <tr>
+                    <th>생년월일</th>
+                    <td>
+                        <input type="date" name="mybirth">
+                    </td>
+                </tr>
+                <tr>
+                    <th>주소</th>
+                    <td>
+                        <input type="text" name="myaddress">
+                    </td>
+                </tr>
+
+            </table>
+        </form>
+    </div>
 </div>
 
 </body>

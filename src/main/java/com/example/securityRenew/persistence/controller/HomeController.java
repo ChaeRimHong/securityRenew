@@ -2,11 +2,14 @@ package com.example.securityRenew.persistence.controller;
 
 import com.example.securityRenew.persistence.dto.BoardDto;
 import com.example.securityRenew.persistence.dto.HelloDto;
+import com.example.securityRenew.persistence.dto.UserDto;
 import com.example.securityRenew.persistence.mapper.ServiceMapper;
 import com.example.securityRenew.persistence.model.Board;
 import com.example.securityRenew.persistence.model.Hello;
+import com.example.securityRenew.persistence.model.User;
 import com.example.securityRenew.persistence.service.Board.BoardService;
 import com.example.securityRenew.persistence.service.Hello.HelloService;
+import com.example.securityRenew.persistence.service.System.SystemService;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -21,6 +24,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class HomeController {
@@ -32,6 +36,9 @@ public class HomeController {
 
     @Autowired
     HelloService helloService;
+
+    @Autowired
+    SystemService systemService;
 
     @GetMapping({"/", "/home"})
     public String home() {
@@ -189,4 +196,29 @@ public class HomeController {
         return "hello_board :: helloTable"; // template 파일 이름 + '::' + 데이터가 변경 될 fragment id
     }
 
+//------SYSTEM 전용------------------------------------------------
+    @GetMapping("/user_list")
+    public String user_list(Model model, @RequestParam(required = false, defaultValue = "0", value = "page") int page){
+        Page<User> userPage = systemService.listpage(page);
+        int totalPage = userPage.getTotalPages();
+        int nowpage = userPage.getPageable().getPageNumber() + 1;//현재페이지
+        model.addAttribute("nowpage", nowpage);
+        model.addAttribute("list", userPage.getContent());
+        model.addAttribute("totalPage", totalPage);
+        List<User> list = systemService.out();
+        return "user_list";
+    }
+
+//-----MYPAGE----------------------------------------------------
+    @GetMapping("/mypage")
+    public String mypage(Model mo, UserDto userDto, HttpSession session) {
+
+        String now_id = session.getId();
+        System.out.println("세션 id : "+now_id);
+        Optional<User> user = systemService.mypage(now_id);
+        mo.addAttribute("id",user.get().getId());
+        mo.addAttribute("password",user.get().getPassword());
+        mo.addAttribute("name",user.get().getName());
+        return "mypage";
+    }
 }

@@ -39,7 +39,8 @@
                            data-bs-toggle="dropdown"
                            sec:authorize="hasRole(T(com.example.securityRenew.persistence.enums.UserRole).SYSTEM)">회원관리</a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="/member_list">회원 명단</a></li>
+                            <li><a class="dropdown-item" href="/user_list">회원 명단</a></li>
+                            <li><a class="dropdown-item" href="/user_list">회원 명단</a></li>
                             <li><a class="dropdown-item" href="#">Another link</a></li>
                             <li><a class="dropdown-item" href="#">A third link</a></li>
                         </ul>
@@ -65,6 +66,7 @@
                     <aaa th:if="${#httpServletRequest.remoteUser != null }">
                         <a th:inline="text">반가워요, [[${#httpServletRequest.remoteUser}]] 님!</a>
 
+                        <a sec:authorize="isAuthenticated()" th:href="@{/mypage}">mypage</a> &emsp;
                         <a sec:authorize="isAuthenticated()" th:href="@{/logout}">로그아웃</a>
 
                         <a sec:authorize="hasRole('ROLE_MEMBER')" th:href="@{/user/info}">내정보</a>
