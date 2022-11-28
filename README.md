@@ -1,10 +1,10 @@
 # securityRenew
 SpringBoot Security를 이용한 로그인유저 게시판 구현
 
->사이트 간단 설명 
+><h1>사이트 간단 설명</h1>
 [security게시판.pdf](https://github.com/ChaeRimHong/securityRenew/files/10029587/security.pdf)
 
->해야할 것
+><h3>해야할 것</h3>
 >1. 게시글 삭제 후 board로 돌아가기 (11-28~)
 >2. 가입인사 삭제 만들기 (11-28~)
 >3. 게시글 추천 만들기 (11-28~)
