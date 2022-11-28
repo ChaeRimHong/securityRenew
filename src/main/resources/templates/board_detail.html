@@ -131,7 +131,8 @@ table.table table-hover td {
                                 </tr>
                                 <tr>
                                     <td colspan="3" style="text-align:left;border-top:none; padding-top: 80px">
-                                        <img th:src="@{/image/}+${uploadfilename}" width="100" height="80 "/>
+
+                                        <img th:if="${uploadfilename != null }" th:src="@{/image/}+${uploadfilename}" width="100" height="80 "/>
                                         <!--
                                         줄바꿈
                                         https://offbyone.tistory.com/326
